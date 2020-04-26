@@ -13,5 +13,5 @@ user = sa.Table(
     sa.Column('first_name', sa.String, nullable=False),
     sa.Column('last_name', sa.String, nullable=False),
     sa.Column('username', sa.String, nullable=False),
-    # sa.Column('language_code', sa.String, nullable=False),
+    sa.Column('language_code', sa.String, nullable=False),
 )
