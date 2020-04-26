@@ -3,7 +3,6 @@ import django_telegram.constants as constants
 import telegram.ext
 from django.db.models.signals import post_init, pre_save
 import json
-from telethon import TelegramClient, sync
 import os
 import Butlers
 from django_telegram.imports import *
@@ -622,28 +621,6 @@ def handler_instance_post_init(sender, instance, **kwargs):
 
 
 post_init.connect(handler_instance_post_init, sender=HandlerInstance)
-
-
-class TelegramClientAPI(models.Model):
-    MAX_CLIENT_API_NAME_LENGTH = 50
-    MAX_API_HASH_LENGTH = 50
-
-    name = models.CharField(max_length=MAX_CLIENT_API_NAME_LENGTH)
-    username = models.CharField(max_length=User.MAX_USERNAME_LENGTH, unique=True)
-    api_id = models.IntegerField()
-    api_hash = models.CharField(max_length=MAX_API_HASH_LENGTH)
-
-    def load_client(self):
-        self.telegram_client = TelegramClient(os.path.join(Butlers.settings.BASE_DIR, self.name), self.api_id,
-                                              self.api_hash)
-
-    def add_users_to_group(self, chat, users):
-        client_api.add_users_to_group(self.telegram_client, chat, users)
-
-
-def telegram_client_api_instance_post_init(sender, instance, **kwargs):
-    instance.load_client()
-
 
 class MessageModel(models.Model, concurrency.lockable):
     sent_for_sending = models.DateTimeField(null=True)
