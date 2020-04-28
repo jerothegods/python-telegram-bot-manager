@@ -94,7 +94,7 @@ def done(update, context):
 
 def main():
 
-    updater = Updater("1217645409:AAErW7O6IhbGwKmjKOS7zp2I8vbG5ovmwGE", use_context=True)
+    updater = Updater("TOKEN", use_context=True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
